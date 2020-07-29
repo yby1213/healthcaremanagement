@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.two.dao.RegistrationMapper">
+
+    <select id="getRegistrationList" resultType="Registration">
+        select *  from hospital_registration where 1=1
+        <if test="regName!=null and regName!=''">
+            and (regPatientName like concat("%",#{regName},"%") OR regDoctorName like concat("%",#{regName},"%")  )
+        </if>
+        order by regNo DESC LIMIT #{currentPageNo},#{pageSize}
+    </select>
+
+    <select id="getRegistrationCount" resultType="int">
+        select count(1) as count from hospital_registration where 1=1
+        <if test="regName!=null and regName!=''">
+            and (regPatientName like concat("%",#{regName},"%") OR regDoctorName like concat("%",#{regName},"%")  )
+        </if>
+    </select>
+
+    <select id="getRegistrationByNo" parameterType="String" resultType="Registration" >
+	select *  from hospital_registration where regNo=#{regNo}
+    </select>
+
+    <insert id="add">
+       insert into hospital_registration(regPatientName,regPatientSymptoms,regClinicName,regDoctorName,remaining,regDate,diagnosis) VALUES (#{regPatientName},#{regPatientSymptoms},#{regClinicName},#{regDoctorName},#{remaining},#{regDate},#{diagnosis})
+    </insert>
+
+    <delete id="deleteRegistrationByNo">
+        delete from hospital_registration where regNo = #{regNo}
+    </delete>
+
+    <update id="modify">
+        UPDATE hospital_registration set regPatientName = #{regPatientName},regPatientSymptoms=#{regPatientSymptoms},regClinicName=#{regClinicName},regDoctorName=#{regDoctorName},diagnosis=#{diagnosis} WHERE regNo = #{regNo}
+    </update>
+
+</mapper>

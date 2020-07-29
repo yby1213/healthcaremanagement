@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.two.dao.DoctorMapper">
+
+
+	<select id="getLoginDoc" parameterType="String" resultType="Doctor">
+		select * from hospital_doctor where doctorTel=#{doctorTel}
+	</select>
+
+	<insert id="add" parameterType="Doctor">
+		insert into hospital_doctor(doctorName,doctorTel,doctorSex,doctorBel,doctorPassword)
+		values(#{doctorName},#{doctorTel},#{doctorSex},#{doctorBel},#{doctorPassword})
+	</insert>
+
+	<!--<select id="getPatientList" resultType="Registration" parameterType="String">
+	select @n:=@n+1 rank,regPatientName,regPatientSymptoms from (select @n:= 0) d,hospital_registration WHERE regDoctorName=#{doctorName} order BY regDate
+	</select>-->
+
+	<select id="getDoctorList" resultType="Doctor">
+		SELECT * from hospital_doctor where 1=1
+		<if test="doctorName!=null and doctorName!=''">
+			and doctorName like concat("%",#{doctorName},"%")
+		</if>
+		order by doctorNo DESC LIMIT #{currentPageNo},#{pageSize}
+	</select>
+
+	<select id="getDoctorCount" resultType="int">
+		select count(1) as count from hospital_doctor where 1=1
+		<if test="doctorName!=null and doctorName!=''">
+			and doctorName like concat("%",#{doctorName},"%")
+		</if>
+	</select>
+
+	<select id="getDoctorByNo" resultType="Doctor">
+		select * from hospital_doctor where doctorNo=#{doctorNo}
+	</select>
+
+	<update id="modify" parameterType="Doctor">
+	update hospital_doctor set doctorName=#{doctorName},doctorSex=#{doctorSex},doctorTel=#{doctorTel},doctorBel=#{doctorBel},doctorPassword=#{doctorPassword}
+	where doctorNo = #{doctorNo}
+    </update>
+
+	<delete id="deleteDoctorByNo" parameterType="String">
+	delete from hospital_doctor where doctorNo=#{doctorNo}
+	</delete>
+
+</mapper>

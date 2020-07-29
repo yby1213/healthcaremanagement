@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.two.dao.MedicineMapper">
+
+<!--<select id="getLoginUser" resultType="com.etc.entity.Medicine">
+	SELECT * FROM SMBMS_USER where userCode=#{userCode}
+</select>-->
+
+
+<select id="getMedicineList" parameterType="String" resultType="Medicine">
+	SELECT * from HOSPITAL_MEDICINE where 1=1
+	<if test="medicineName!=null and medicineName!=''">
+		and medicineName like concat("%",#{medicineName},"%")
+	</if>
+	order by medicineNo DESC LIMIT #{currentPageNo},#{pageSize}
+</select>
+
+    <select id="getMedicineModList" resultType="Medicine">
+        SELECT * from HOSPITAL_MEDICINE
+    </select>
+
+
+ <select id="getMedicineCount" resultType="int">
+     select count(1) as count from HOSPITAL_MEDICINE where 1=1
+     <if test="medicineName!=null and medicineName!=''">
+         and medicineName like concat("%",#{medicineName},"%")
+     </if>
+</select>
+
+   <select id="getMedicineByMedicineNo" resultType="Medicine">
+	   select * from hospital_medicine where medicineNo=#{No}
+    </select>
+
+
+
+    <insert  id="add" parameterType="Medicine" >
+     insert into hospital_medicine (medicineNo,medicineName,medicineDisease,medicineDoses)values(NULL,#{medicineName},#{medicineDisease},#{medicineDoses})
+    </insert>
+
+
+        <delete id="deleteMedicineById">delete from hospital_medicine where medicineNo =#{selId}</delete>
+
+            <update id="modify" parameterType="Medicine">
+                update hospital_medicine set medicineName=#{medicineName},medicineDisease=#{medicineDisease},medicineDoses=#{medicineDoses}
+                where medicineNo = #{medicineNo}
+            </update>
+
+
+
+
+
+<!--
+<select id="getUserById" resultType="com.etc.entity.User">
+	SELECT * FROM SMBMS_USER where userCode=#{userCode}
+</select>
+
+
+
+<update id="modify">
+	update smbms_user set userName=#{},"+
+	"gender=#{},birthday=#{},phone=#{},address=#{},userRole=#{},
+	modifyBy=#{},modifyDate=#{} where id = #{}
+</update>
+
+
+<select id="ListUser" resultType="com.etc.entity.User">
+	SELECT * FROM SMBMS_USER
+</select>
+
+================================================================================================================
+
+
+
+<update id="updateUser"  parameterType="com.etc.entity.User">
+	UPDATE SMBMS_USER 
+	<set>
+	<trim suffixOverrides=",">
+	<if test="userName!='' and userName!=null">
+	userName=#{userName},
+	</if>
+	<if test="userPassWord!='' and userPassWord!=null">
+	userPassWord=#{userPassWord},
+	</if>
+	<if test="gender!=''">
+	gender=#{gender},
+	</if>
+	</trim>
+	</set>
+	<where>
+		id=#{id}
+	</where>
+</update>
+ 
+ 
+ <insert  id="inserttUser" parameterType="com.etc.entity.User" >
+ insert into smbms_user (userCode,userName,userPassword," +
+					"userRole,gender,birthday,phone,address,creationDate,createdBy,picUrl,idPic) " +
+					"values(?,?,?,?,?,?,?,?,?,?,?,?)
+</insert> -->
+
+</mapper>																

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.two.dao.ClinicMapper">
+
+    <select id="getClinicList" resultType="Clinic">
+        select *  from hospital_clinic where 1=1
+        <if test="clinicName!=null and clinicName!=''">
+            and clinicName like concat("%",#{clinicName},"%")
+        </if>
+        order by clinicNo DESC LIMIT #{currentPageNo},#{pageSize}
+    </select>
+
+    <select id="getClinicCount" resultType="int">
+        select count(1) as count from hospital_clinic where 1=1
+        <if test="clinicName!=null and clinicName!=''">
+            and clinicName like concat("%",#{clinicName},"%")
+        </if>
+    </select>
+
+    <insert id="add" parameterType="Clinic">
+    insert  into hospital_clinic(clinicName,clinicAddress,clinicDoc,clinicIntroduce)
+    values
+    (#{clinicName},#{clinicAddress},#{clinicDoc},#{clinicIntroduce})
+    </insert>
+
+    <select id="getClinicByNo" parameterType="String" resultType="Clinic" >
+	select *  from hospital_clinic where clinicNo=#{clinicNo}
+    </select>
+
+    <update id="modify" parameterType="Clinic">
+	update hospital_clinic set clinicName=#{clinicName},clinicAddress=#{clinicAddress},clinicDoc=#{clinicDoc},clinicDoc=#{clinicDoc}
+	where clinicNo = #{clinicNo}
+    </update>
+
+    <delete id="deleteClinicByNo" parameterType="String" >
+	delete from hospital_clinic where clinicNo=#{clinicNo}
+    </delete>
+
+</mapper>

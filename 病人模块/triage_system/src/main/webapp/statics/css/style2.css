@@ -1,0 +1,53 @@
+.black_overlay{ 
+            display: block;
+            position: absolute; 
+            top: 0%; 
+            left: 0%; 
+            width: 100%; 
+            height: 184%; 
+            background-color: black; 
+            z-index:1001; 
+            -moz-opacity: 0.8; 
+            opacity:.80; 
+            filter: alpha(opacity=88); 
+        } 
+        .white_content { 
+            display: block;
+            position: absolute; 
+            top: 45%; 
+            left: 25%; 
+            width: 55%; 
+            height: 55%; 
+            padding: 20px; 
+            border: 10px solid orange; 
+            background-color: white; 
+            z-index:1002; 
+            overflow: auto; 
+        } 
+        #info_suc{
+        	color: red;
+        	position: relative;
+        	top: -186px;
+        	right: -375px;
+        	font-size:70px;
+        }
+#success{
+	margin-top: 64px;
+	margin-left: 103px;
+}
+#infoName,#infoPhone{
+	color: red;
+}
+
+#marquePic1{
+    width: 201px;
+}
+#registrationList li{
+    margin-top: 20px;
+}
+.table_show{
+    margin-left: 200px;
+}
+.ch{
+font-size: 15px;
+}

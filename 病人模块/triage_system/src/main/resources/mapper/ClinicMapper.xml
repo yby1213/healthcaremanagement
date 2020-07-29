@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.two.dao.ClinicMapper">
+
+
+    <select id="getClinicList" resultType="Clinic">
+        select DISTINCT * from hospital_clinic
+    </select>
+
+    <select id="getClinicDocList" resultType="Clinic">
+        select * from hospital_clinic where clinicName=#{clinicName}
+    </select>
+<select id="getClinicDoc"  resultType="Clinic">
+    select * from hospital_clinic where clinicNo=#{clinicNo};
+</select>
+
+</mapper>

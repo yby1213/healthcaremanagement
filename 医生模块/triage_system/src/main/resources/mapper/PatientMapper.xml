@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.two.dao.PatientMapper">
+
+    <select id="getPatientList" resultType="Patient">
+        SELECT * from hospital_patient where 1=1
+        <if test="patientName!=null and patientName!=''">
+            and patientName like concat("%",#{patientName},"%")
+        </if>
+        order by patientNo DESC LIMIT #{currentPageNo},#{pageSize}
+    </select>
+
+    <select id="getPatientCount" resultType="int">
+        select count(1) as count from hospital_patient where 1=1
+        <if test="patientName!=null and patientName!=''">
+            and patientName like concat("%",#{patientName},"%")
+        </if>
+    </select>
+
+    <delete id="deletePatientByNo" parameterType="String">
+        delete from hospital_patient where patientNo = #{patientNo}
+    </delete>
+
+    <select id="getPatientByNo" parameterType="String" resultType="Patient" >
+	select *  from hospital_patient where patientNo=#{patientNo}
+    </select>
+
+    <update id="modify" parameterType="Patient">
+	update hospital_patient set patientName=#{patientName},patientSex=#{patientSex},patientAge=#{patientAge},patientAddress=#{patientAddress},patientTel=#{patientTel}
+	where patientNo = #{patientNo}
+    </update>
+
+    <insert id="add" parameterType="Patient">
+    insert  into hospital_Patient(patientName,patientAge,patientSex,patientTel,patientAddress,appDate)
+    values
+    (#{patientName},#{patientAge},#{patientSex},#{patientTel},#{patientAddress},#{appDate})
+    </insert>
+
+</mapper>

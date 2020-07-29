@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.two.dao.RegistrationMapper">
+
+
+    <select id="getRegistrationList" resultType="Registration">
+        select * from hospital_registration
+    </select>
+
+    <insert id="addReg" parameterType="Registration">
+        insert into hospital_registration (regNo,regPatientName,regDate,regClinicName,regDoctorName,regPatientSymptoms)
+        values (#{regNo},#{regPatientName},#{regDate},#{regClinicName},#{regDoctorName},#{regPatientSymptoms})
+    </insert>
+
+    <select id="getRegistration" resultType="Registration">
+        select * from hospital_patient p  where p.patientName=#{regPatientName}
+    </select>
+    
+    <select id="getDiagnosis" resultType="Registration">
+       select * from hospital_patient p,hospital_registration r where p.patientName=r.regPatientName and r.regPatientName=#{regPatientName} and p.patientTel=#{patientTel}
+    </select>
+    
+</mapper>
